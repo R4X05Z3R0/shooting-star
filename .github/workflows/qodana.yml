@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull_requests: write
+      pull_request: write
       checks: write
 
     steps:
