@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class WishListService {
-    private final WishListRepository wishListRepository;
+    private WishListRepository wishListRepository;
 
     @Autowired
     public WishListService(WishListRepository wishListRepository){

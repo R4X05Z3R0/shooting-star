@@ -26,6 +26,7 @@ public class WishListController {
         return "<h1>Ønskeskyen Clone: Online!</h1><p>The skeleton is alive.</p>";
     }
 
+    @GetMapping("/wishes")
     public ResponseEntity<List<Wish>> wishes(){
         List<Wish> wishes = service.getAllWishes();
         return new ResponseEntity<>(wishes, HttpStatus.OK);
