@@ -60,11 +60,12 @@ public class UserService {
      * @param id userId for deletion
      * @return rows affected ('1' for success, '0' for no changes)
      */
-    public void deleteUser(int id){
+    public int deleteUser(int id){
         int rowCheck = userRepository.deleteUser(id);
 
         if (rowCheck == 0){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found");
         }
+        return rowCheck;
     }
 }
