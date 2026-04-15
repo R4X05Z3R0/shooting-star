@@ -49,7 +49,7 @@ public class UserRepository {
      * Getting User by ID
      * @return single user object from SQL query
      */
-    public User getUserByID(){
+    public User getUserByiD(int id){
         String sql = "SELECT * FROM users WHERE user_id = ?";
         return jdbcTemplate.queryForObject(sql, (rs, rowNum) ->{
             User user = new User();
@@ -60,7 +60,7 @@ public class UserRepository {
             user.setName(rs.getString("name"));
             user.setEmail(rs.getString("email"));
             return user;
-        });
+        }, id);
     }
 
     /**
@@ -70,7 +70,7 @@ public class UserRepository {
      * @return number of rows affected ('1' for success, '0' for no changes)
      */
     public int updateUser(int id, User user){
-        String sql = "UPDATE users SET username = ?, password = ?,  name = ?, email = ?" +
+        String sql = "UPDATE users SET username = ?, password = ?,  name = ?, email = ? " +
                     "WHERE user_id = ?";
 
         return jdbcTemplate.update(sql,
@@ -86,7 +86,7 @@ public class UserRepository {
      * @param id userId for deletion
      */
     public void deleteUser(int id){
-        String sql = "DELETE FROM user WHERE user_id = ?";
+        String sql = "DELETE FROM users WHERE user_id = ?";
         jdbcTemplate.update(sql, id);
     }
 }
