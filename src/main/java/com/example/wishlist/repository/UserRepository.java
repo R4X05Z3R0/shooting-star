@@ -85,9 +85,10 @@ public class UserRepository {
     /**
      * Deletes user from User table
      * @param id userId for deletion
+     * @return rows affected ('1' for success, '0' for no changes)
      */
-    public void deleteUser(int id){
+    public int deleteUser(int id){
         String sql = "DELETE FROM users WHERE user_id = ?";
-        jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, id);
     }
 }
