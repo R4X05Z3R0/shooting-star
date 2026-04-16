@@ -1,33 +1,38 @@
-create database if not exists wishlist;
-use wishlist;
+CREATE DATABASE IF NOT EXISTS wishlist;
+USE wishlist;
 
-drop table if exists wish;
-drop table if exists wishlist; 
-drop table if exists users;
+DROP TABLE IF EXISTS wish;
+DROP TABLE IF EXISTS wishlist;
+DROP TABLE IF EXISTS users;
 
-
-create table users(
-user_id int auto_increment primary key,
-username varchar(50) not null,
-password varchar(255) not null,
-name varchar(50) not null,
-email varchar(50) unique
+CREATE TABLE users (
+                       user_id INT AUTO_INCREMENT PRIMARY KEY,
+                       username VARCHAR(50) NOT NULL UNIQUE,
+                       password VARCHAR(255) NOT NULL,
+                       name VARCHAR(50) NOT NULL,
+                       email VARCHAR(50) UNIQUE
 );
 
-create table wishlist(
-wishlist_id int auto_increment primary key,
-title varchar(50) not null,
-user_id int,
-constraint fk_users foreign key (user_id) references users(user_id) on delete cascade
+CREATE TABLE wishlist (
+                          wishlist_id INT AUTO_INCREMENT PRIMARY KEY,
+                          title VARCHAR(50) NOT NULL,
+                          user_id INT,
+                          CONSTRAINT fk_users
+                              FOREIGN KEY (user_id)
+                                  REFERENCES users(user_id)
+                                  ON DELETE CASCADE
 );
 
-create table wish(
-wish_id int auto_increment primary key,
-wish_title varchar(50) not null,
-price decimal(10, 2),
-description text,
-url varchar(2048),
-image_url varchar(2048),
-wishlist_id int,
-constraint fk_wishlist foreign key (wishlist_id) references wishlist(wishlist_id) on delete cascade
+CREATE TABLE wish (
+                      wish_id INT AUTO_INCREMENT PRIMARY KEY,
+                      wish_title VARCHAR(50) NOT NULL,
+                      price DECIMAL(10, 2),
+                      description TEXT,
+                      url VARCHAR(2048),
+                      image_url VARCHAR(2048),
+                      wishlist_id INT,
+                      CONSTRAINT fk_wishlist
+                          FOREIGN KEY (wishlist_id)
+                              REFERENCES wishlist(wishlist_id)
+                              ON DELETE CASCADE
 );
