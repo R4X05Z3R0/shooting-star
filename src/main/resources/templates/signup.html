@@ -8,7 +8,7 @@
 
 <h2>Create Account</h2>
 
-<form th:method="post" th:action="/signup">
+<form th:method="post" th:action="@{users/create}">
 
 	<label>Name</label><br>
 	<input type="text" name="name" required>
@@ -33,7 +33,7 @@
 <hr>
 
 <p>Already have an account?</p>
-<a th:href="/login">Go to Login</a>
+<a th:href="@{/shootingstar/login}">Go to Login</a>
 
 </body>
 </html>
