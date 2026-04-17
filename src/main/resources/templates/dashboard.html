@@ -1,10 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Title</title>
+	<title>Dashboard</title>
 </head>
+
 <body>
+
+<h1>Dashboard</h1>
+
+<!-- Show user info from session -->
+<p>
+	Welcome,
+	<span th:text="${session.username}">User's Username</span>
+</p>
+
+<hr>
+
+<h3>Your Panel</h3>
+
+<ul>
+	<li><a href="#">My Wishlists</a></li>
+</ul>
+
+<hr>
+
+<!-- Logout -->
+<form method="post" th:action="@{/auth/logout}">
+	<button type="submit">Logout</button>
+</form>
 
 </body>
 </html>

@@ -29,7 +29,7 @@ public class AuthController {
             session.setAttribute("username", user.getUsername());
             session.setMaxInactiveInterval(20);
 
-        return "redirect:/dashboard";
+        return "redirect:/shootingstar/dashboard";
 
         } catch (Exception e){
             model.addAttribute("wronglogin","Invalid Username/Password");
