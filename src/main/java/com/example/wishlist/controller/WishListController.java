@@ -47,7 +47,7 @@ public class WishListController {
         if (userId == null) return "redirect:/login";
 
         wishListService.createWishlist(userId, title);
-        return "redirect:/wishlists";
+        return "redirect:/wishlist";
     }
 
     @GetMapping("/{wishlistId}")
@@ -62,7 +62,7 @@ public class WishListController {
         model.addAttribute("wishlist", wishlist.get());
         model.addAttribute("wishes", wishes);
         model.addAttribute("newWish", new Wish());
-        return "wishlist-detail";
+        return "wishlist-homepage";
     }
 
     @GetMapping("/{wishlistId}/edit")
