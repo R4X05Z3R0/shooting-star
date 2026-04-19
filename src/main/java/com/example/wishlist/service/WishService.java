@@ -34,17 +34,11 @@ public class WishService {
         return wish;
     }
 
-    public Optional<Wish> createWish(Wish wish, int userId) {
-        if (wishListService.getWishlistForUser(wish.getWishlistId(), userId).isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(wishRepository.save(wish));
-    }
 
     public boolean updateWish(Wish wish, int userId) {
         Optional<Wish> existing = getWishForUser(wish.getWishId(), userId);
         if (existing.isEmpty()) return false;
-        // Preserve wishlistId — don't let update reassign a wish to another list.
+
         wish.setWishlistId(existing.get().getWishlistId());
         wishRepository.update(wish);
         return true;
