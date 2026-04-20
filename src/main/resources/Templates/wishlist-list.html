@@ -12,21 +12,29 @@
     <button type="button">+ Create new wishlist</button>
 </a>
 
+<hr>
 <ul>
-    <li th:each="wl : ${wishlists}">
-        <a th:href="@{'/wishlists/' + ${wl.wishlistID}}" th:text="${wl.title}">Title</a>
-        <a th:href="@{'/wishlists/' + ${wl.wishlistID} + '/edit'}">
-            <button type="button">Rename</button>
-        </a>
-        <form th:action="@{'/wishlists/' + ${wl.wishlistID} + '/delete'}"
-              method="post" style="display:inline">
-            <button type="submit"
-                    onclick="return confirm('Delete this wishlist?')">Delete</button>
-        </form>
-    </li>
-    <li th:if="${#lists.isEmpty(wishlists)}">
-        No wishlists yet. Create one above.
-    </li>
+	<li th:each="wl : ${wishlists}">
+		<a th:href="@{/wishlists/{id}(id=${wl.wishlistID})}"
+		   th:text="${wl.title}">Title</a>
+
+		<a th:href="@{/wishlists/{id}/edit(id=${wl.wishlistID})}">
+			Rename
+		</a>
+
+		<form th:action="@{/wishlists/{id}/delete(id=${wl.wishlistID})}"
+		      method="post" style="display:inline">
+			<button type="submit"
+			        onclick="return confirm('Delete this wishlist?')">
+				Delete
+			</button>
+		</form>
+	</li>
+
+	<li th:if="${#lists.isEmpty(wishlists)}">
+		No wishlists yet. Create one above.
+	</li>
 </ul>
+
 </body>
 </html>

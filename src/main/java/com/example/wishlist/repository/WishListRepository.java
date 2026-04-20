@@ -23,7 +23,7 @@ public class WishListRepository {
     }
     // Finder
     public List<WishList> findWishlistByUserId(int userId) {
-        String sql = "SELECT wishlist_id, user_id FROM wishlist WHERE user_id = ?";
+        String sql = "SELECT wishlist_id, title, user_id FROM wishlist WHERE user_id = ?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(WishList.class), userId);
     }
 
