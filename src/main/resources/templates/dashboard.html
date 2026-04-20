@@ -20,7 +20,27 @@
 <h3>Your Panel</h3>
 
 <ul>
-	<li><a th:href="@{/wishlists/}">My Wishlists</a></li>
+	<li th:if="${#lists.isEmpty(wishlists)}">
+		No wishlists yet. <span><a th:href="@{/wishlists/new}">Create one</a></span>
+	</li>
+
+	<li th:each="wl : ${wishlists}">
+		<a th:href="@{/wishlist/{id}(id=${wl.wishlistID})}"
+		th:text="${wl.title}">Wishlist Title</a>
+
+		<a th:href="@{/wishlists/{id}/edit(id=${wl.wishlistID})}">
+			Rename
+		</a>
+
+		<form th:action="@{/wishlists/{id}/delete(id=${wl.wishlistID})}"
+		method="post" style="display: inline">
+			<button type="submit"
+			        th:data-name="${wl.title}"
+			        onclick="return confirm('Really wanna delete ' + this.getAttribute('data-name') + '?')">
+				Delete
+			</button>
+		</form>
+	</li>
 </ul>
 
 <hr>

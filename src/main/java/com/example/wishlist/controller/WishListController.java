@@ -31,7 +31,7 @@ public class WishListController {
 
         List<WishList> wishlists = wishListService.getUserWishlists(userId);
         model.addAttribute("wishlists", wishlists);
-        return "wishlist-list";
+        return "dashboard";
     }
 
     @GetMapping("/new")
