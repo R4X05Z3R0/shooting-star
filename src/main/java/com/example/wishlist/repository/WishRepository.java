@@ -23,7 +23,7 @@ public class WishRepository {
 
     public List<Wish> findByWishlistId(int wishlistId) {
         String sql = """
-                SELECT wish_id, wish_title, price, description, url, image_url, wishlist_id
+                SELECT *
                 FROM wish
                 WHERE wishlist_id = ?
                 ORDER BY wish_id
