@@ -1,9 +1,12 @@
 package com.example.wishlist.model;
 
+//should we add description ?
+
 public class WishList {
     private int wishlistID;
     private String title;
     private int userId;
+
 
     //Constructors
     public WishList(int wishlistID, String title, int userId) {
@@ -35,5 +38,7 @@ public class WishList {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+
 }
 

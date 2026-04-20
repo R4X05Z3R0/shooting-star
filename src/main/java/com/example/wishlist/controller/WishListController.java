@@ -1,36 +1,99 @@
 package com.example.wishlist.controller;
 
 import com.example.wishlist.model.Wish;
+import com.example.wishlist.model.WishList;
 import com.example.wishlist.service.WishListService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.wishlist.service.WishService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
-@RestController
-@RequestMapping("/shootingstar/wishlist")
+@Controller
+@RequestMapping("/wishlists")
 public class WishListController {
-    private final WishListService service;
 
-    @Autowired
-    public WishListController(WishListService service){
-        this.service = service;
+    private final WishListService wishListService;
+    private final WishService wishService;
+
+    public WishListController(WishListService wishListService, WishService wishService) {
+        this.wishListService = wishListService;
+        this.wishService = wishService;
     }
 
-    @GetMapping("/homepage")
-    public String homepage() {
-        return "<h1>Ønskeskyen Clone: Online!</h1><p>The skeleton is alive.</p>";
+    @GetMapping
+    public String listWishlists(HttpSession session, Model model) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) return "redirect:/login";
+
+        List<WishList> wishlists = wishListService.getUserWishlists(userId);
+        model.addAttribute("wishlists", wishlists);
+        return "wishlist-list";
     }
 
-    @GetMapping("/wishes")
-    public ResponseEntity<List<Wish>> wishes(){
-        List<Wish> wishes = service.getAllWishes();
-        return new ResponseEntity<>(wishes, HttpStatus.OK);
+    @GetMapping("/new")
+    public String showCreateForm(HttpSession session, Model model) {
+        if (session.getAttribute("userId") == null) return "redirect:/login";
+        model.addAttribute("wishlist", new WishList());
+        return "wishlist-new";
     }
 
+    @PostMapping
+    public String createWishlist(@RequestParam String title, HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) return "redirect:/login";
+
+        wishListService.createWishlist(userId, title);
+        return "redirect:/wishlist";
+    }
+
+    @GetMapping("/{wishlistId}")
+    public String showWishlist(@PathVariable int wishlistId, HttpSession session, Model model) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) return "redirect:/login";
+
+        Optional<WishList> wishlist = wishListService.getWishlistForUser(wishlistId, userId);
+        if (wishlist.isEmpty()) return "redirect:/wishlists";
+
+        List<Wish> wishes = wishService.getWishesForUserWishlist(wishlistId, userId);
+        model.addAttribute("wishlist", wishlist.get());
+        model.addAttribute("wishes", wishes);
+        model.addAttribute("newWish", new Wish());
+        return "wishlist-homepage";
+    }
+
+    @GetMapping("/{wishlistId}/edit")
+    public String showEditForm(@PathVariable int wishlistId, HttpSession session, Model model) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) return "redirect:/login";
+
+        Optional<WishList> wishlist = wishListService.getWishlistForUser(wishlistId, userId);
+        if (wishlist.isEmpty()) return "redirect:/wishlists";
+
+        model.addAttribute("wishlist", wishlist.get());
+        return "wishlist-edit";
+    }
+
+    @PostMapping("/{wishlistId}/update")
+    public String updateWishlist(@PathVariable int wishlistId,
+                                 @RequestParam String title,
+                                 HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) return "redirect:/login";
+
+        wishListService.updateWishlist(wishlistId, userId, title);
+        return "redirect:/wishlists";
+    }
+
+    @PostMapping("/{wishlistId}/delete")
+    public String deleteWishlist(@PathVariable int wishlistId, HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) return "redirect:/login";
+
+        wishListService.deleteWishlist(wishlistId, userId);
+        return "redirect:/wishlists";
+    }
 }
-

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang= "en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>New Wishlist</title>
+  <link th:href="@{/main.css}" rel="stylesheet">
+</head>
+<body>
+<h1>Create a new wishlist</h1>
+
+<form th:action="@{/wishlists}" method="post">
+  <label for="title">Title:</label>
+  <input type="text" id="title" name="title" required maxlength="50">
+  <button type="submit">Save</button>
+  <a th:href="@{/wishlists}"><button type="button">Cancel</button></a>
+</form>
+</body>
+</html>

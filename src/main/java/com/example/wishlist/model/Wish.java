@@ -16,7 +16,6 @@ public class Wish {
         this.wishId = wishId;
         this.description = description;
         this.url = url;
-        this.imageUrl = imageUrl;
         this.wishlistId = wishlistID;
     }
     public Wish(){}

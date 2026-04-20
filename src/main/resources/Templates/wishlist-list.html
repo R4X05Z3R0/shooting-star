@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Wishlists</title>
+    <link th:href="@{/main.css}" rel="stylesheet">
+</head>
+<body>
+<h1>My Wishlists</h1>
+
+<a th:href="@{/wishlists/new}">
+    <button type="button">+ Create new wishlist</button>
+</a>
+
+<ul>
+    <li th:each="wl : ${wishlists}">
+        <a th:href="@{'/wishlists/' + ${wl.wishlistID}}" th:text="${wl.title}">Title</a>
+        <a th:href="@{'/wishlists/' + ${wl.wishlistID} + '/edit'}">
+            <button type="button">Rename</button>
+        </a>
+        <form th:action="@{'/wishlists/' + ${wl.wishlistID} + '/delete'}"
+              method="post" style="display:inline">
+            <button type="submit"
+                    onclick="return confirm('Delete this wishlist?')">Delete</button>
+        </form>
+    </li>
+    <li th:if="${#lists.isEmpty(wishlists)}">
+        No wishlists yet. Create one above.
+    </li>
+</ul>
+</body>
+</html>
