@@ -40,7 +40,7 @@ public class WishListRepository {
     // gemmer
 
     public WishList saveWishlist(WishList wishList) {
-        String sql = "INSERT INTO wishlist(title, user_id VALUES(?, ?)";
+        String sql = "INSERT INTO wishlist(title, user_id) VALUES(?, ?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 

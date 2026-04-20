@@ -8,11 +8,11 @@
 <body>
 <h1>Create a new wishlist</h1>
 
-<form th:action="@{/wishlists}" method="post">
+<form th:action="@{/wishlists/create}" method="post">
   <label for="title">Title:</label>
   <input type="text" id="title" name="title" required maxlength="50">
   <button type="submit">Save</button>
-  <a th:href="@{/wishlists}"><button type="button">Cancel</button></a>
+  <a th:href="@{/wishlists/}"><button type="button">Cancel</button></a>
 </form>
 </body>
 </html>
