@@ -1,8 +1,9 @@
 package com.example.wishlist.repository;
 
-import com.example.wishlist.model.Wish;
+import com.example.wishlist.mapper.WishlistRowMapper;
+
 import com.example.wishlist.model.WishList;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -17,14 +18,16 @@ import java.util.Optional;
 public class WishListRepository {
 
     private JdbcTemplate jdbcTemplate;
+    private final WishlistRowMapper wishlistRowMapper;
 
     public WishListRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.wishlistRowMapper = new WishlistRowMapper();
     }
     // Finder
     public List<WishList> findWishlistByUserId(int userId) {
         String sql = "SELECT wishlist_id, title, user_id FROM wishlist WHERE user_id = ?";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(WishList.class), userId);
+        return jdbcTemplate.query(sql, wishlistRowMapper, userId);
     }
 
     public Optional<WishList> getWishlistForUser(int wishlistId, int userId) {
@@ -34,7 +37,7 @@ public class WishListRepository {
     public Optional<WishList> findById(int wishlistId) {
         String sql = "SELECT wishlist_id, title, user_id FROM wishlist WHERE wishlist_id = ?";
         List<WishList> results = jdbcTemplate.query(
-                sql, new BeanPropertyRowMapper<>(WishList.class), wishlistId);
+                sql, wishlistRowMapper, wishlistId);
         return results.stream().findFirst();
     }
     // gemmer
@@ -63,6 +66,7 @@ public class WishListRepository {
     String sql = "UPDATE wishlist SET title = ? Where wishlist_id = ?";
     jdbcTemplate.update(sql, wishList.getTitle(), wishList.getWishlistId());
     }
+
     public void deleteById(int wishlistId) {
         String  sql = "DELETE FROM wishlist WHERE wishlist_id = ?";
         jdbcTemplate.update(sql, wishlistId);
