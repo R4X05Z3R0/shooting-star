@@ -5,52 +5,58 @@ import com.example.wishlist.repository.WishRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class WishService {
 
     private final WishRepository wishRepository;
-    private final WishListService wishListService;
 
-    public WishService(WishRepository wishRepository, WishListService wishListService) {
+    public WishService(WishRepository wishRepository) {
         this.wishRepository = wishRepository;
-        this.wishListService = wishListService;
     }
 
-    public List<Wish> getWishesForUserWishlist(int wishlistId, int userId) {
-        if (wishListService.getWishlistForUser(wishlistId, userId).isEmpty()) {
-            return List.of();
-        }
+    // GET all wishes in a wishlist
+    public List<Wish> getWishes(int wishlistId) {
         return wishRepository.findByWishlistId(wishlistId);
     }
 
-    public Optional<Wish> getWishForUser(int wishId, int userId) {
-        Optional<Wish> wish = wishRepository.findById(wishId);
-        if (wish.isEmpty()) return Optional.empty();
-        if (wishListService.getWishlistForUser(wish.get().getWishlistId(), userId).isEmpty()) {
-            return Optional.empty();
-        }
-        return wish;
-    }
-    public Optional<Wish> createWish(Wish wish, int userId) {
-        if (wishListService.getWishlistForUser(wish.getWishlistId(), userId).isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(wishRepository.save(wish));
+    // GET single wish (ownership enforced in SQL)
+    public Wish getWish(int wishId, int userId) {
+        return wishRepository.findByIdAndUser(wishId, userId);
     }
 
+    // CREATE
+    public Wish createWish(Wish wish) {
+        if (wish.getUrl() != null && !wish.getUrl().startsWith("http")) {//HTTP inserter
+            wish.setUrl("https://" + wish.getUrl());
+        }
+        if (wish.getImageUrl() != null && !wish.getImageUrl().startsWith("http")) {//HTTP inserter
+            wish.setUrl("https://" + wish.getImageUrl());
+        }
+        return wishRepository.save(wish);
+    }
+
+    // UPDATE (ownership enforced in SQL via find first)
     public boolean updateWish(Wish wish, int userId) {
-        Optional<Wish> existing = getWishForUser(wish.getWishId(), userId);
-        if (existing.isEmpty()) return false;
+        Wish existing = wishRepository.findByIdAndUser(wish.getWishId(), userId);
 
-        wish.setWishlistId(existing.get().getWishlistId());
+        if (existing == null) {
+            return false;
+        }
+
+        wish.setWishlistId(existing.getWishlistId());
         wishRepository.update(wish);
         return true;
     }
 
+    // DELETE (same pattern: verify ownership first)
     public boolean deleteWish(int wishId, int userId) {
-        if (getWishForUser(wishId, userId).isEmpty()) return false;
+        Wish existing = wishRepository.findByIdAndUser(wishId, userId);
+
+        if (existing == null) {
+            return false;
+        }
+
         wishRepository.deleteById(wishId);
         return true;
     }

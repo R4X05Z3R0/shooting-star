@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Wishlist</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+
+<h2>Wishlist</h2>
+
+<a th:href="@{/wishlists/{id}/wishes/create(id=${wishlistId})}">
+	+ Make a Wish
+</a>
+
+<hr>
+
+<div th:if="${#lists.isEmpty(wishes)}">
+	<p>No wishes yet.</p>
+</div>
+
+<!-- EACH WISH STARTS HERE -->
+<div th:each="wish : ${wishes}"
+     style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+
+	<!-- Clickable area (edit page) -->
+	<a th:href="@{/wishlists/{wid}/wishes/{wishId}/edit(
+                    wid=${wishlistId},
+                    wishId=${wish.wishId})}"
+	   style="text-decoration:none; color:inherit; display:block;">
+
+		<h3 th:text="${wish.wishTitle}"></h3>
+
+		<p th:text="${wish.description}"></p>
+
+		<p>
+			Price:
+			<span th:text="${wish.price}"></span>
+		</p>
+
+		<p th:if="${wish.url != null}">
+			<a th:href="${wish.url}"
+			   target="_blank"
+			   onclick="event.stopPropagation();">
+				Open Link
+			</a>
+		</p>
+
+		<img th:if="${wish.imageUrl != null}"
+		     th:src="${wish.imageUrl}"
+		     style="max-width:150px;">
+
+	</a>
+
+	<!-- Actions MUST be inside loop -->
+	<a th:href="@{/wishlists/{wid}/wishes/{wishId}/edit(
+                    wid=${wishlistId},
+                    wishId=${wish.wishId})}">
+		Edit
+	</a>
+
+	<form th:action="@{/wishlists/{wid}/wishes/{wishId}/delete(
+                        wid=${wishlistId},
+                        wishId=${wish.wishId})}"
+	      method="post"
+	      style="display:inline;">
+
+		<button type="submit"
+		        th:data-name="${wish.wishTitle}"
+		        onclick="return confirm('Really wanna delete ' + this.getAttribute('data-name') + '?')">
+			Delete
+		</button>
+	</form>
+
+</div>
+
+<a th:href="@{/wishlists/}">← Back to all wishlists</a>
+
+</body>
+</html>

@@ -24,54 +24,64 @@ public class WishListController {
         this.wishService = wishService;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public String listWishlists(HttpSession session, Model model) {
         Integer userId = (Integer) session.getAttribute("userId");
-        if (userId == null) return "redirect:/login";
+        if (userId == null) return "redirect:/shootingstar/login";
 
         List<WishList> wishlists = wishListService.getUserWishlists(userId);
         model.addAttribute("wishlists", wishlists);
-        return "wishlist-list";
+        return "dashboard";
     }
 
     @GetMapping("/new")
     public String showCreateForm(HttpSession session, Model model) {
-        if (session.getAttribute("userId") == null) return "redirect:/login";
+        if (session.getAttribute("userId") == null) return "redirect:/shootingstar/login";
         model.addAttribute("wishlist", new WishList());
         return "wishlist-new";
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public String createWishlist(@RequestParam String title, HttpSession session) {
         Integer userId = (Integer) session.getAttribute("userId");
-        if (userId == null) return "redirect:/login";
+        if (userId == null) return "redirect:/shootingstar/login";
 
         wishListService.createWishlist(userId, title);
-        return "redirect:/wishlist";
+        return "redirect:/wishlists/";
     }
 
     @GetMapping("/{wishlistId}")
-    public String showWishlist(@PathVariable int wishlistId, HttpSession session, Model model) {
+    public String showWishlist(@PathVariable int wishlistId,
+                               HttpSession session,
+                               Model model) {
+
         Integer userId = (Integer) session.getAttribute("userId");
-        if (userId == null) return "redirect:/login";
+        if (userId == null) {
+            //System.out.println("No userId in session");
+            return "redirect:/wishlists/";
+        }
 
-        Optional<WishList> wishlist = wishListService.getWishlistForUser(wishlistId, userId);
-        if (wishlist.isEmpty()) return "redirect:/wishlists";
+//        System.out.println("wishlistId = " + wishlistId);
+//        System.out.println("userId = " + userId);
 
-        List<Wish> wishes = wishService.getWishesForUserWishlist(wishlistId, userId);
-        model.addAttribute("wishlist", wishlist.get());
+        List<Wish> wishes = wishService.getWishes(wishlistId);
+
+//        System.out.println("wishes size = " + (wishes != null ? wishes.size() : "null"));
+//        System.out.println("wishes = " + wishes);
+
         model.addAttribute("wishes", wishes);
-        model.addAttribute("newWish", new Wish());
-        return "wishlist-homepage";
+        model.addAttribute("wishlistId", wishlistId);
+
+        return "view-wishes";
     }
 
     @GetMapping("/{wishlistId}/edit")
     public String showEditForm(@PathVariable int wishlistId, HttpSession session, Model model) {
         Integer userId = (Integer) session.getAttribute("userId");
-        if (userId == null) return "redirect:/login";
+        if (userId == null) return "redirect:/shootingstar/login";
 
         Optional<WishList> wishlist = wishListService.getWishlistForUser(wishlistId, userId);
-        if (wishlist.isEmpty()) return "redirect:/wishlists";
+        if (wishlist.isEmpty()) return "redirect:/wishlists/";
 
         model.addAttribute("wishlist", wishlist.get());
         return "wishlist-edit";
@@ -82,18 +92,18 @@ public class WishListController {
                                  @RequestParam String title,
                                  HttpSession session) {
         Integer userId = (Integer) session.getAttribute("userId");
-        if (userId == null) return "redirect:/login";
+        if (userId == null) return "redirect:/shootingstar/login";
 
         wishListService.updateWishlist(wishlistId, userId, title);
-        return "redirect:/wishlists";
+        return "redirect:/wishlists/";
     }
 
     @PostMapping("/{wishlistId}/delete")
     public String deleteWishlist(@PathVariable int wishlistId, HttpSession session) {
         Integer userId = (Integer) session.getAttribute("userId");
-        if (userId == null) return "redirect:/login";
+        if (userId == null) return "redirect:/shootingstar/login";
 
         wishListService.deleteWishlist(wishlistId, userId);
-        return "redirect:/wishlists";
+        return "redirect:/wishlists/";
     }
 }

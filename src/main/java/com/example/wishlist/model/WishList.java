@@ -1,44 +1,43 @@
 package com.example.wishlist.model;
 
-//should we add description ?
-
 public class WishList {
-    private int wishlistID;
+
+    private int wishlistId;
     private String title;
     private int userId;
 
-
-    //Constructors
-    public WishList(int wishlistID, String title, int userId) {
-        this.wishlistID = wishlistID;
+    // Constructors
+    public WishList(int wishlistId, String title, int userId) {
+        this.wishlistId = wishlistId;
         this.title = title;
         this.userId = userId;
     }
 
-    public WishList(){};
+    public WishList() {}
 
-    //Getters
-    public int getWishlistID() {
-        return wishlistID;
+    // Getters
+    public int getWishlistId() {
+        return wishlistId;
     }
-    public int getUserId() {
-        return userId;
-    }
+
     public String getTitle() {
         return title;
     }
 
-    //Setters
-    public void setWishlistID(int wishlistID) {
-        this.wishlistID = wishlistID;
+    public int getUserId() {
+        return userId;
     }
+
+    // Setters
+    public void setWishlistId(int wishlistId) {
+        this.wishlistId = wishlistId;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
+
     public void setUserId(int userId) {
         this.userId = userId;
     }
-
-
 }
-

@@ -2,18 +2,20 @@ package com.example.wishlist.repository;
 
 import com.example.wishlist.model.User;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import com.example.wishlist.mapper.UserRowMapper;
 
 import java.util.List;
 
 @Repository
 public class UserRepository {
     private JdbcTemplate jdbcTemplate;
+    private final UserRowMapper userRowMapper;
 
     public UserRepository(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
+        this.userRowMapper = new UserRowMapper();
     }
 
     /**Create User
@@ -36,16 +38,7 @@ public class UserRepository {
      */
     public List<User> getAllUsers(){
         String sql =  "SELECT * FROM users";
-        return jdbcTemplate.query(sql, (rs, rownum) -> {
-            User user = new User();
-
-            user.setUserId(rs.getInt("user_id"));
-            user.setUsername(rs.getString("username"));
-            user.setPassword(rs.getString("password"));
-            user.setName(rs.getString("name"));
-            user.setEmail(rs.getString("email"));
-            return user;
-        });
+        return jdbcTemplate.query(sql, userRowMapper);
     }
 
     /**
@@ -54,16 +47,7 @@ public class UserRepository {
      */
     public User getUserById(int id){
         String sql = "SELECT * FROM users WHERE user_id = ?";
-        return jdbcTemplate.queryForObject(sql, (rs, rowNum) ->{
-            User user = new User();
-
-            user.setUserId(rs.getInt("user_id"));
-            user.setUsername(rs.getString("username"));
-            user.setPassword(rs.getString("password"));
-            user.setName(rs.getString("name"));
-            user.setEmail(rs.getString("email"));
-            return user;
-        }, id);
+        return jdbcTemplate.queryForObject(sql, userRowMapper, id);
     }
 
     /**
@@ -104,7 +88,7 @@ public class UserRepository {
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
 
         try{
-            return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), username, password);
+            return jdbcTemplate.queryForObject(sql, userRowMapper, username, password);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }

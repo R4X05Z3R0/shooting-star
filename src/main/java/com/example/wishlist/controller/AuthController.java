@@ -28,9 +28,9 @@ public class AuthController {
             User user = service.userLogin(username, password);
             session.setAttribute("userId", user.getUserId());
             session.setAttribute("username", user.getUsername());
-            session.setMaxInactiveInterval(20);
+            session.setMaxInactiveInterval(10*60);
 
-        return "redirect:/shootingstar/dashboard";
+        return "redirect:/wishlists/";
 
         } catch (ResponseStatusException e){
             model.addAttribute("wronglogin","Invalid Username/Password");

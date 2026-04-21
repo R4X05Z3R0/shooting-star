@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Edit Wish</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+
+<h2>Edit Wish</h2>
+
+<form th:action="@{/wishlists/{wid}/wishes/{wishId}/update(
+                    wid=${wish.wishlistId},
+                    wishId=${wish.wishId})}"
+      th:object="${wish}"
+      method="post">
+
+	<!-- Title -->
+	<label>Title:</label><br>
+	<input type="text" th:field="*{wishTitle}" required>
+	<br><br>
+
+	<!-- Price -->
+	<label>Price:</label><br>
+	<input type="number" step="0.01" th:field="*{price}">
+	<br><br>
+
+	<!-- Description -->
+	<label>Description:</label><br>
+	<textarea th:field="*{description}"></textarea>
+	<br><br>
+
+	<!-- URL -->
+	<label>Link:</label><br>
+	<input type="text" th:field="*{url}">
+	<br><br>
+
+	<!-- Image URL -->
+	<label>Image URL:</label><br>
+	<input type="text" th:field="*{imageUrl}">
+	<br><br>
+
+	<!-- Hidden fields -->
+	<input type="hidden" th:field="*{wishId}">
+	<input type="hidden" th:field="*{wishlistId}">
+
+	<button type="submit">Save Changes</button>
+</form>
+
+<br>
+
+<!-- Back -->
+<a th:href="@{/wishlists/{id}(id=${wish.wishlistId})}">
+	Back to Wishlist
+</a>
+
+</body>
+</html>

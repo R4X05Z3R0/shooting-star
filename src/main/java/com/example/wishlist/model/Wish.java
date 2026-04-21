@@ -15,6 +15,7 @@ public class Wish {
         this.price = price;
         this.wishId = wishId;
         this.description = description;
+        this.imageUrl = imageUrl;
         this.url = url;
         this.wishlistId = wishlistID;
     }
