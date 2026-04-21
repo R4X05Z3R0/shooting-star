@@ -9,7 +9,7 @@
 <h2>Wishlist</h2>
 
 <a th:href="@{/wishlists/{id}/wishes/create(id=${wishlistId})}">
-	+ Add New Wish
+	+ Make a Wish
 </a>
 
 <hr>
@@ -64,7 +64,11 @@
 	      method="post"
 	      style="display:inline;">
 
-		<button type="submit">Delete</button>
+		<button type="submit"
+		        th:data-name="${wish.wishTitle}"
+		        onclick="return confirm('Really wanna delete ' + this.getAttribute('data-name') + '?')">
+			Delete
+		</button>
 	</form>
 
 </div>

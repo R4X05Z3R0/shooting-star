@@ -57,17 +57,17 @@ public class WishListController {
 
         Integer userId = (Integer) session.getAttribute("userId");
         if (userId == null) {
-            System.out.println("No userId in session");
+            //System.out.println("No userId in session");
             return "redirect:/wishlists/";
         }
 
-        System.out.println("wishlistId = " + wishlistId);
-        System.out.println("userId = " + userId);
+//        System.out.println("wishlistId = " + wishlistId);
+//        System.out.println("userId = " + userId);
 
         List<Wish> wishes = wishService.getWishes(wishlistId);
 
-        System.out.println("wishes size = " + (wishes != null ? wishes.size() : "null"));
-        System.out.println("wishes = " + wishes);
+//        System.out.println("wishes size = " + (wishes != null ? wishes.size() : "null"));
+//        System.out.println("wishes = " + wishes);
 
         model.addAttribute("wishes", wishes);
         model.addAttribute("wishlistId", wishlistId);
