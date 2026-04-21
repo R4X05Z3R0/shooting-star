@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;500;700&display=swap');
+
+:root {
+    --bg-color: #ffffff;
+    --paper-color: #ffffff;
+    --ink-black: #000000;
+    --ink-grey: #666666;
+}
+
+body {
+    background-color: var(--paper-color);
+    background-image: radial-gradient(#eeeeee 1.5px, transparent 1.5px);
+    background-size: 30px 30px;
+    font-family: 'Lexend', sans-serif;
+    color: var(--ink-black);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Simplified Nav Bar */
+nav.sketch-nav {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    display: flex;
+    gap: 12px;
+}
+
+.nav-tape {
+    text-decoration: none;
+    color: var(--ink-black);
+    padding: 8px 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: transparent;
+    border-radius: 50px;
+    /* Softened Border */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.nav-tape:hover {
+    border-color: var(--ink-black);
+    background: var(--ink-black);
+    color: white;
+}
+/* The Notebook Page (Cleaner) */
+.notebook-page {
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    padding: 60px 40px;
+    margin-top: 20px;
+    position: relative;
+    border-radius: 32px; /* Large, friendly rounded corners */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* Subtler Lifted Shadow */
+.notebook-page::after {
+    content: "";
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    width: 40%;
+    height: 10px;
+    box-shadow: 0 15px 15px rgba(0, 0, 0, 0.1);
+    transform: rotate(2deg);
+    z-index: -1;
+}
+
+/*Add a second lift on the left for a "floating" feel */
+.notebook-page::before {
+    content: "";
+    position: absolute;
+    bottom: 18px;
+    left: 25px;
+    width: 60%;
+    height: 20px;
+    background: transparent;
+    box-shadow: 0 18px 18px rgba(0, 0, 0, 0.12);
+    transform: rotate(-3deg);
+    z-index: -1;
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 3rem;
+    margin: 0;
+    letter-spacing: -2px;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.subtitle {
+    text-align: center;
+    font-weight: 300;
+    font-size: 1.1rem;
+    color: var(--ink-grey);
+    margin-top: 5px;
+}
+
+.action-area {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.main-button {
+    text-decoration: none;
+    background: var(--ink-black);
+    color: white;
+    padding: 18px 40px;
+    border-radius: 20px;
+    display: inline-block;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+}
+
+.main-button:hover {
+    transform: scale(1.03);
+}
+
+.secondary-link {
+    color: var(--ink-black);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-weight: 500;
+}

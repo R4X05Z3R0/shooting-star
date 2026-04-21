@@ -2,27 +2,33 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Shooting Star</title>
+	<link rel="stylesheet" th:href="@{/css/homepage.css}">
 </head>
 
 <body>
 
-<h1>Welcome to Shooting Star</h1>
-<nav>
-	<a th:href="@{/shootingstar/signup}">
-		<button>Sign Up</button>
-	</a>
+<nav class="sketch-nav">
+	<a th:href="@{/shootingstar/signup}" class="nav-tape">Sign Up</a>
+	<a th:href="@{/shootingstar/login}" class="nav-tape">Log In</a>
 </nav>
-<p>Plan your wishlists</p>
 
-<hr>
+<div class="notebook-page">
+	<header>
+		<h1>Welcome to Shooting Star</h1>
+		<p class="subtitle">Your personal constellation.</p>
+	</header>
 
-<div>
-	<h3>Make a Wish</h3>
+	<main class="action-area">
+		<p style="margin-bottom: 30px; color: #5f6368;">Start your collection of wishes today.</p>
 
-	<a th:href="@{/shootingstar/login}">
-		<button>Login</button>
-	</a>
+		<a th:href="@{/shootingstar/signup}" class="main-button">Start Wishing</a>
+
+		<p style="margin-top: 25px; font-size: 0.9rem;">
+			Been here before? <a th:href="@{/shootingstar/login}" style="color: #1a73e8; text-decoration: none; font-weight: 500;">Log in</a>
+		</p>
+	</main>
 </div>
 
 </body>
