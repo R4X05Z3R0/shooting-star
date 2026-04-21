@@ -63,7 +63,7 @@ public class WishListRepository {
     }
 //retter
     public void update(WishList wishList){
-    String sql = "UPDATE wishlist SET title = ? Where wishlist_id = ?";
+    String sql = "UPDATE wishlist SET title = ? WHERE wishlist_id = ?";
     jdbcTemplate.update(sql, wishList.getTitle(), wishList.getWishlistId());
     }
 

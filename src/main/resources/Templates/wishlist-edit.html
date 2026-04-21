@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Edit Wishlist</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+
+<h2>Edit Wishlist</h2>
+
+<form th:action="@{/wishlists/{id}/update(id=${wishlist.wishlistId})}"
+      th:object="${wishlist}"
+      method="post">
+
+	<!-- Title -->
+	<label>Title:</label><br>
+	<input type="text" th:field="*{title}" required>
+	<br><br>
+
+	<!-- Hidden ID (safety, optional if using path) -->
+	<input type="hidden" th:field="*{wishlistId}">
+
+	<button type="submit">Save Changes</button>
+</form>
+
+<br>
+
+<!-- Back link -->
+<a th:href="@{/wishlists/}">
+	Back to Wishlist
+</a>
+
+</body>
+</html>

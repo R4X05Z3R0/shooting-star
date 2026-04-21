@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/wishes")
+@RequestMapping("/wishlists/{wishlistId}/wishes")
 public class WishController {
 
     private final WishService wishService;
