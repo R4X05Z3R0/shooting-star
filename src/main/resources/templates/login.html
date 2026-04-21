@@ -2,33 +2,48 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Login</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login | Shooting Star</title>
+	<link rel="stylesheet" th:href="@{/css/common.css}">
+	<link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 
 <body>
 
-<h2>Login</h2>
+<nav class="sketch-nav">
+	<a th:href="@{/shootingstar/}" class="nav-tape">Home</a>
+</nav>
 
-<form th:method="post" th:action="@{/auth/login}">
+<div class="notebook-page">
+	<header>
+		<h1>Login</h1>
+		<p class="subtitle">Welcome back to the stars.</p>
+	</header>
 
-	<p th:if="${wronglogin}" th:text="${wronglogin}" style="color:red;"></p>
+	<main class="action-area">
+		<form th:method="post" th:action="@{/auth/login}" class="auth-form">
 
-	<label>Username</label><br>
-	<input type="text" name="username" required>
-	<br><br>
+			<p th:if="${wronglogin}" th:text="${wronglogin}" class="error-msg"></p>
 
-	<label>Password</label><br>
-	<input type="password" name="password" required>
-	<br><br>
+			<div class="input-group">
+				<label>Username</label>
+				<input type="text" name="username" placeholder="Enter your username" required>
+			</div>
 
-	<button type="submit">Login</button>
+			<div class="input-group">
+				<label>Password</label>
+				<input type="password" name="password" placeholder="★★★★★★★★" required>
+			</div>
 
-</form>
+			<button type="submit" class="main-button" style="width: 100%; margin-top: 10px;">Login</button>
+		</form>
 
-<hr>
-
-<p>Don’t have an account?</p>
-<a th:href="@{/shootingstar/signup}">Create one</a>
+		<p style="margin-top: 25px; font-size: 0.9rem;">
+			Don’t have an account?
+			<a th:href="@{/shootingstar/signup}" style="color: #1a73e8; text-decoration: none; font-weight: 500;">Create one</a>
+		</p>
+	</main>
+</div>
 
 </body>
 </html>
