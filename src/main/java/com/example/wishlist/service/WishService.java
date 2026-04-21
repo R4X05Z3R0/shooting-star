@@ -27,6 +27,9 @@ public class WishService {
 
     // CREATE
     public Wish createWish(Wish wish) {
+        if (wish.getUrl() != null && !wish.getUrl().startsWith("http")) {//HTTP inserter
+            wish.setUrl("https://" + wish.getUrl());
+        }
         return wishRepository.save(wish);
     }
 
