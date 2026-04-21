@@ -1,79 +1,71 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Wishlist</title>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Wishlist | Shooting Star</title>
+	<link rel="stylesheet" th:href="@{/css/common.css}">
+	<link rel="stylesheet" th:href="@{/css/wishlist.css}">
 </head>
+
 <body>
 
-<h2>Wishlist</h2>
+<nav class="main-nav">
+	<div class="nav-container">
+		<div class="nav-left">
+			<a th:href="@{/shootingstar/}" class="nav-logo">Shooting Star</a>
+			<a th:href="@{/wishlists/}" class="nav-link">Dashboard</a>
+		</div>
 
-<a th:href="@{/wishlists/{id}/wishes/create(id=${wishlistId})}">
-	+ Make a Wish
-</a>
+		<form method="post" th:action="@{/auth/logout}" class="logout-form">
+			<button type="submit" class="nav-tape logout-btn">Log Out</button>
+		</form>
+	</div>
+</nav>
 
-<hr>
+<header class="user-hero">
+	<h1 th:text="${title!= null ? title : 'Wishlist'}">Wishlist</h1>
+	<p class="subtitle">Where your stars are gathered.</p>
+</header>
 
-<div th:if="${#lists.isEmpty(wishes)}">
-	<p>No wishes yet.</p>
-</div>
+<div class="notebook-page expanded-card">
+	<div class="card-header">
+		<a th:href="@{/wishlists/}" class="back-link">← Back to Dashboard</a>
+		<a th:href="@{/wishlists/{id}/wishes/create(id=${wishlistId})}" class="main-button">+ Make a Wish</a>
+	</div>
 
-<!-- EACH WISH STARTS HERE -->
-<div th:each="wish : ${wishes}"
-     style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+	<div th:if="${#lists.isEmpty(wishes)}" class="empty-state">
+		<p>No wishes yet. <span><a th:href="@{/wishlists/{id}/wishes/create(id=${wishlistId})}" class="blue-pen">Catch your first star.</a></span></p>
+	</div>
 
-	<!-- Clickable area (edit page) -->
-	<a th:href="@{/wishlists/{wid}/wishes/{wishId}/edit(
-                    wid=${wishlistId},
-                    wishId=${wish.wishId})}"
-	   style="text-decoration:none; color:inherit; display:block;">
+	<div class="wish-grid">
+		<div th:each="wish : ${wishes}" class="wish-card">
 
-		<h3 th:text="${wish.wishTitle}"></h3>
+			<a th:if="${wish.url != null}" th:href="${wish.url}" target="_blank" class="wish-content-link">
 
-		<p th:text="${wish.description}"></p>
+				<img th:if="${wish.imageUrl != null}" th:src="${wish.imageUrl}" class="wish-image">
 
-		<p>
-			Price:
-			<span th:text="${wish.price}"></span>
-		</p>
+				<h3 th:text="${wish.wishTitle}" class="wish-title"></h3>
+				<p th:text="${wish.description}" class="wish-desc"></p>
 
-		<p th:if="${wish.url != null}">
-			<a th:href="${wish.url}"
-			   target="_blank"
-			   onclick="event.stopPropagation();">
-				Open Link
+				<p class="wish-price">
+					Price: <span th:text="${wish.price}">0.00</span>
+				</p>
 			</a>
-		</p>
 
-		<img th:if="${wish.imageUrl != null}"
-		     th:src="${wish.imageUrl}"
-		     style="max-width:150px;">
+			<div class="wish-footer">
+				<div class="footer-links">
+<!--					<a th:if="${wish.url != null}" th:href="${wish.url}" target="_blank" class="blue-pen small" onclick="event.stopPropagation();">Open Link</a>-->
+					<a th:href="@{/wishlists/{wid}/wishes/{wishId}/edit(wid=${wishlistId}, wishId=${wish.wishId})}" class="blue-pen small">Edit</a>
+				</div>
 
-	</a>
-
-	<!-- Actions MUST be inside loop -->
-	<a th:href="@{/wishlists/{wid}/wishes/{wishId}/edit(
-                    wid=${wishlistId},
-                    wishId=${wish.wishId})}">
-		Edit
-	</a>
-
-	<form th:action="@{/wishlists/{wid}/wishes/{wishId}/delete(
-                        wid=${wishlistId},
-                        wishId=${wish.wishId})}"
-	      method="post"
-	      style="display:inline;">
-
-		<button type="submit"
-		        th:data-name="${wish.wishTitle}"
-		        onclick="return confirm('Really wanna delete ' + this.getAttribute('data-name') + '?')">
-			Delete
-		</button>
-	</form>
-
+				<form th:action="@{/wishlists/{wid}/wishes/{wishId}/delete(wid=${wishlistId}, wishId=${wish.wishId})}" method="post">
+					<button type="submit" class="delete-btn" th:data-name="${wish.wishTitle}" onclick="return confirm('Really delete ' + this.getAttribute('data-name') + '?')">Delete</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
-
-<a th:href="@{/wishlists/}">← Back to all wishlists</a>
 
 </body>
 </html>

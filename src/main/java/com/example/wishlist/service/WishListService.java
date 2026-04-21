@@ -24,6 +24,10 @@ public class WishListService {
         return wishListRepository.getWishlistForUser(wishlistId,userId);
     }
 
+    public WishList findWishlistByWishlistId(int wishlistId){
+        return wishListRepository.findWishlistById(wishlistId);
+    }
+
     public WishList createWishlist(int userId, String title) {
         WishList wishList = new WishList();
         wishList.setTitle(title);

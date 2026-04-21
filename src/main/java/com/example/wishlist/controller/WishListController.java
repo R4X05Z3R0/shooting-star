@@ -65,12 +65,15 @@ public class WishListController {
 //        System.out.println("userId = " + userId);
 
         List<Wish> wishes = wishService.getWishes(wishlistId);
+        WishList wishList = wishListService.findWishlistByWishlistId(wishlistId);
+
 
 //        System.out.println("wishes size = " + (wishes != null ? wishes.size() : "null"));
 //        System.out.println("wishes = " + wishes);
 
         model.addAttribute("wishes", wishes);
         model.addAttribute("wishlistId", wishlistId);
+        model.addAttribute("title", wishList.getTitle());
 
         return "view-wishes";
     }

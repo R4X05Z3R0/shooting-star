@@ -40,6 +40,10 @@ public class WishListRepository {
                 sql, wishlistRowMapper, wishlistId);
         return results.stream().findFirst();
     }
+    public WishList findWishlistById(int wishlistId) {
+        String sql = "SELECT wishlist_id, title, user_id FROM wishlist WHERE wishlist_id = ?";
+        return jdbcTemplate.queryForObject(sql, wishlistRowMapper, wishlistId);
+    }
     // gemmer
 
     public WishList saveWishlist(WishList wishList) {
