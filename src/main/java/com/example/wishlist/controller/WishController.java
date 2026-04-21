@@ -8,8 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.Optional;
-
 @Controller
 @RequestMapping("/wishlists/{wishlistId}/wishes")
 public class WishController {
@@ -27,7 +25,7 @@ public class WishController {
                                  Model model) {
 
         if (session.getAttribute("userId") == null) {
-            return "redirect:/login";
+            return "redirect:/shootingstar/login";
         }
 
         Wish wish = new Wish();
@@ -44,7 +42,7 @@ public class WishController {
                              HttpSession session) {
 
         Integer userId = (Integer) session.getAttribute("userId");
-        if (userId == null) return "redirect:/login";
+        if (userId == null) return "redirect:/shootingstar/login";
 
         wish.setWishlistId(wishlistId);
 
@@ -62,7 +60,7 @@ public class WishController {
 
         Integer userId = (Integer) session.getAttribute("userId");
         if (userId == null) {
-            return "redirect:/login";
+            return "redirect:/shootingstar/login";
         }
 
         Wish wish = wishService.getWish(wishId, userId);
@@ -85,7 +83,7 @@ public class WishController {
         Integer userId = (Integer) session.getAttribute("userId");
         if (userId == null)
         {
-            return "redirect:/login";
+            return "redirect:/shootingstar/login";
         }
 
         wish.setWishId(wishId);
@@ -107,7 +105,7 @@ public class WishController {
 
         Integer userId = (Integer) session.getAttribute("userId");
         if (userId == null){
-            return "redirect:/login";
+            return "redirect:/shootingstar/login";
         }
 
         wishService.deleteWish(wishId, userId);

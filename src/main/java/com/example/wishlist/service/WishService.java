@@ -15,7 +15,7 @@ public class WishService {
         this.wishRepository = wishRepository;
     }
 
-    // GET all wishes in a wishlist (no ownership check here anymore)
+    // GET all wishes in a wishlist
     public List<Wish> getWishes(int wishlistId) {
         return wishRepository.findByWishlistId(wishlistId);
     }

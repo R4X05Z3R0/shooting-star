@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Create Wish</title>
+	<title>Edit Wish</title>
 	<meta charset="UTF-8">
 </head>
 <body>
 
-<h2>Create Wish</h2>
+<h2>Edit Wish</h2>
 
-<form th:action="@{/wishlists/{id}/wishes/create(id=${wish.wishlistId})}"
+<form th:action="@{/wishlists/{wid}/wishes/{wishId}/update(
+                    wid=${wish.wishlistId},
+                    wishId=${wish.wishId})}"
       th:object="${wish}"
       method="post">
 
@@ -37,10 +39,11 @@
 	<input type="text" th:field="*{imageUrl}">
 	<br><br>
 
-	<!-- Hidden wishlistId -->
+	<!-- Hidden fields -->
+	<input type="hidden" th:field="*{wishId}">
 	<input type="hidden" th:field="*{wishlistId}">
 
-	<button type="submit">Create Wish</button>
+	<button type="submit">Save Changes</button>
 </form>
 
 <br>
