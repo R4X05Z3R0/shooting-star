@@ -88,11 +88,7 @@ public class WishController {
 
         wish.setWishId(wishId);
 
-        boolean success = wishService.updateWish(wish, userId);
-
-        if (!success) {
-            return "redirect:/wishlists/" + wishlistId;
-        }
+        wishService.updateWish(wish, userId);
 
         return "redirect:/wishlists/" + wishlistId;
     }
