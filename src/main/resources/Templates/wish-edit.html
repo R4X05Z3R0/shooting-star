@@ -1,57 +1,73 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Edit Wish</title>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Edit Wish | Shooting Star</title>
+	<link rel="stylesheet" th:href="@{/css/common.css}">
+	<link rel="stylesheet" th:href="@{/css/wish-edit.css}">
 </head>
 <body>
 
-<h2>Edit Wish</h2>
+<nav class="main-nav">
+	<div class="nav-container">
+		<div class="nav-left">
+			<a th:href="@{/shootingstar/}" class="nav-logo">Shooting Star</a>
+			<a th:href="@{/wishlists}" class="nav-link">Dashboard</a>
+		</div>
 
-<form th:action="@{/wishlists/{wid}/wishes/{wishId}/update(
-                    wid=${wish.wishlistId},
-                    wishId=${wish.wishId})}"
-      th:object="${wish}"
-      method="post">
+		<form method="post" th:action="@{/auth/logout}" class="logout-form">
+			<button type="submit" class="logout-btn">Log Out</button>
+		</form>
+	</div>
+</nav>
 
-	<!-- Title -->
-	<label>Title:</label><br>
-	<input type="text" th:field="*{wishTitle}" required>
-	<br><br>
+<header class="user-hero">
+	<h1>Edit Wish</h1>
+	<p class="subtitle">Oh? I suppose some wishes need alteration...</p>
+</header>
 
-	<!-- Price -->
-	<label>Price:</label><br>
-	<input type="number" step="0.01" th:field="*{price}">
-	<br><br>
+<div class="notebook-page expanded-card">
+	<form th:action="@{/wishlists/{wid}/wishes/{wishId}/update(wid=${wish.wishlistId}, wishId=${wish.wishId})}"
+	      th:object="${wish}"
+	      method="post"
+	      class="edit-form">
 
-	<!-- Description -->
-	<label>Description:</label><br>
-	<textarea th:field="*{description}"></textarea>
-	<br><br>
+		<div class="input-group">
+			<label>Title</label>
+			<input type="text" th:field="*{wishTitle}" required placeholder="What are you wishing for?">
+		</div>
 
-	<!-- URL -->
-	<label>Link:</label><br>
-	<input type="text" th:field="*{url}">
-	<br><br>
+		<div class="input-row">
+			<div class="input-group">
+				<label>Price</label>
+				<input type="number" step="0.01" th:field="*{price}" placeholder="0.00">
+			</div>
+			<div class="input-group">
+				<label>Link (URL)</label>
+				<input type="text" th:field="*{url}" placeholder="https://...">
+			</div>
+		</div>
 
-	<!-- Image URL -->
-	<label>Image URL:</label><br>
-	<input type="text" th:field="*{imageUrl}">
-	<br><br>
+		<div class="input-group">
+			<label>Description</label>
+			<textarea th:field="*{description}" rows="4" placeholder="Details! DETAILS!"></textarea>
+		</div>
 
-	<!-- Hidden fields -->
-	<input type="hidden" th:field="*{wishId}">
-	<input type="hidden" th:field="*{wishlistId}">
+		<div class="input-group">
+			<label>Image URL</label>
+			<input type="text" th:field="*{imageUrl}" placeholder="Paste an image link here">
+		</div>
 
-	<button type="submit">Save Changes</button>
-</form>
+		<input type="hidden" th:field="*{wishId}">
+		<input type="hidden" th:field="*{wishlistId}">
 
-<br>
-
-<!-- Back -->
-<a th:href="@{/wishlists/{id}(id=${wish.wishlistId})}">
-	Back to Wishlist
-</a>
+		<div class="form-actions">
+			<button type="submit" class="main-button">Save Changes</button>
+			<a th:href="@{/wishlists/{id}(id=${wish.wishlistId})}" class="cancel-link">Cancel</a>
+		</div>
+	</form>
+</div>
 
 </body>
 </html>
