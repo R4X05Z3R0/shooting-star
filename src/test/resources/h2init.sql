@@ -1,4 +1,3 @@
--- 1. CLEANUP
 -- Drop tables in reverse order of dependency to avoid constraint violations
 DROP TABLE IF EXISTS wish;
 DROP TABLE IF EXISTS wishlist;
