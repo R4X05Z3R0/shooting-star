@@ -22,9 +22,10 @@ public class WishlistH2Test {
     @Test
     void testFindWishlistByUserId() {
 
-        List<WishList> wishLists = wishListRepository.findWishlistByUserId(1);
+        List<WishList> wishLists = wishListRepository.findWishlistByUserId(4);
 
         assertThat(wishLists).isNotEmpty();
+        assertThat(wishLists.getFirst().getTitle()).isEqualTo("Potions Supplies");
     }
 
     @Test
