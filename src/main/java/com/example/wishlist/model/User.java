@@ -21,7 +21,7 @@ public class User {
         this.name = name;
         this.email = email;
     }
-    public User(){};
+    public User(){}
 
     //Getters
     public int getUserId(){
