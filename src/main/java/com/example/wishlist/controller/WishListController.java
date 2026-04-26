@@ -61,12 +61,16 @@ public class WishListController {
             return "redirect:/wishlists/";
         }
 
+        WishList wishList = wishListService.findWishlistByWishlistId(wishlistId);
+
+        if (wishList == null || wishList.getUserId() != userId) {
+            return "redirect:/wishlists/";
+        }
+
 //        System.out.println("wishlistId = " + wishlistId);
 //        System.out.println("userId = " + userId);
 
         List<Wish> wishes = wishService.getWishes(wishlistId);
-        WishList wishList = wishListService.findWishlistByWishlistId(wishlistId);
-
 
 //        System.out.println("wishes size = " + (wishes != null ? wishes.size() : "null"));
 //        System.out.println("wishes = " + wishes);

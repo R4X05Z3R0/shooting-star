@@ -4,6 +4,7 @@ import com.example.wishlist.mapper.WishlistRowMapper;
 
 import com.example.wishlist.model.WishList;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -41,8 +42,12 @@ public class WishListRepository {
         return results.stream().findFirst();
     }
     public WishList findWishlistById(int wishlistId) {
-        String sql = "SELECT wishlist_id, title, user_id FROM wishlist WHERE wishlist_id = ?";
-        return jdbcTemplate.queryForObject(sql, wishlistRowMapper, wishlistId);
+        try {
+            String sql = "SELECT wishlist_id, title, user_id FROM wishlist WHERE wishlist_id = ?";
+            return jdbcTemplate.queryForObject(sql, wishlistRowMapper, wishlistId);
+        } catch (EmptyResultDataAccessException e){
+            return null;
+        }
     }
     // gemmer
 

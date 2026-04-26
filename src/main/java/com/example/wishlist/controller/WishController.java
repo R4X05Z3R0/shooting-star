@@ -25,7 +25,7 @@ public class WishController {
                                  Model model) {
 
         if (session.getAttribute("userId") == null) {
-            return "redirect:redirect:/shootingstar/";
+            return "redirect:/shootingstar/";
         }
 
         Wish wish = new Wish();
